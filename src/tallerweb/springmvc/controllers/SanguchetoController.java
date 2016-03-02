@@ -2,6 +2,7 @@ package tallerweb.springmvc.controllers;
 
 
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Controller;
@@ -20,14 +21,23 @@ import tallerweb.springmvc.model.TipoIngrediente;
 @Controller
 public class SanguchetoController {
 	
+	
 
-
+	@RequestMapping("/stock")
+	public String mostrarStock(Model model) {
+		
+		Stock stock = Stock.getInstance();
+		Map<Ingrediente, Integer> ingredientes = stock.obtenerStock();
+		model.addAttribute("lista", ingredientes);
+		return "stock";
+	
+	}
 	@RequestMapping("/altaproducto")
 	public String agregarProducto(Ingrediente ingrediente) {
 		
 		Stock stock = Stock.getInstance();
 		stock.agregarIngrediente(ingrediente);
-		return "redirect:stock";
+		return "stock";
 	
 	}
 }
